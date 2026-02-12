@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <article class="item-detail">
+    <h1>{{item.title}}</h1>
+    {% if item.image %}
+      <img src="/uploads/{{item.image}}" alt="Photo of {{item.title}}">
+    {% endif %}
+    <p class="muted">Found: {{item.location or 'Unknown'}} • {{item.found_date or 'Date unknown'}}</p>
+    <p>{{item.description}}</p>
+  </article>
+  <section>
+    <h2>Claim or Inquire</h2>
+    <form method="post" class="form" aria-label="Claim form for {{item.title}}">
+      <div>
+        <label class="input-label" for="name">Your name</label>
+        <input id="name" name="name" required aria-required="true">
+      </div>
+      <div>
+        <label class="input-label" for="email">Your email</label>
+        <input id="email" name="email" type="email" required aria-required="true">
+      </div>
+      <div>
+        <label class="input-label" for="message">Message</label>
+        <textarea id="message" name="message"></textarea>
+      </div>
+      <button class="btn" type="submit">Send Claim</button>
+    </form>
+  </section>
+  <section>
+    <h3>Previous Claims</h3>
+    {% for c in claims %}
+      <div class="claim">
+        <strong>{{c.name}}</strong> ({{c.email}}) • {{c.created_at}}
+        <p>{{c.message}}</p>
+      </div>
+    {% else %}
+      <p>No claims yet.</p>
+    {% endfor %}
+  </section>
+{% endblock %}

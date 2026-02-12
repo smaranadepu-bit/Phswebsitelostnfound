@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <h1>Admin Dashboard</h1>
+  <p><a href="/admin/logout">Logout</a> | <a href="/admin/conversations">View Conversations</a></p>
+  <section>
+    <h2>Items</h2>
+    <form method="post" action="/admin/bulk" aria-label="Bulk item actions">
+      <div style="margin-bottom:12px;display:flex;gap:8px;align-items:center">
+        <button class="btn" type="submit" name="action" value="approve">Approve Selected</button>
+        <button class="btn" type="submit" name="action" value="delete">Delete Selected</button>
+      </div>
+      <table class="admin-table">
+        <thead><tr><th><input type="checkbox" id="select-all" aria-label="Select all"></th><th>ID</th><th>Title</th><th>Approved</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for it in items %}
+            <tr>
+              <td><input name="ids" type="checkbox" value="{{it.id}}" aria-label="Select item {{it.title}} (ID {{it.id}})"></td>
+              <td>{{it.id}}</td>
+              <td><a href="{{ url_for('item_detail', item_id=it.id) }}">{{it.title}}</a></td>
+              <td>{{it.approved}}</td>
+              <td>
+                {% if not it.approved %}
+                  <a href="{{ url_for('admin_approve', item_id=it.id) }}">Approve</a>
+                {% endif %}
+                <a href="{{ url_for('admin_delete', item_id=it.id) }}">Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </form>
+    <script>
+      // simple select-all behavior
+      document.addEventListener('DOMContentLoaded', function(){
+        const sa = document.getElementById('select-all');
+        if(!sa) return;
+        sa.addEventListener('change', function(){
+          document.querySelectorAll('input[name="ids"]').forEach(el => el.checked = sa.checked);
+        });
+      });
+    </script>
+  </section>
+  <section>
+    <h2>Claims</h2>
+    <ul>
+      {% for c in claims %}
+        <li>{{c.name}} on item {{c.item_id}} — {{c.email}} — {{c.message}}</li>
+      {% else %}
+        <li>No claims</li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endblock %}

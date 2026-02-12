@@ -1,0 +1,73 @@
+{
+  "info": {
+    "name": "LostAndFound API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Admin Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/x-www-form-urlencoded" }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            { "key": "username", "value": "admin" },
+            { "key": "password", "value": "your-password" }
+          ]
+        },
+        "url": { "raw": "http://localhost:8000/admin/login", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["admin","login"] }
+      }
+    },
+    {
+      "name": "Get Items (public)",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:8000/api/items?page=1&per_page=10", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api","items"], "query": [ { "key": "page", "value": "1" }, { "key": "per_page", "value": "10" } ] }
+      }
+    },
+    {
+      "name": "Create Item (admin)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"Lost Wallet\",\n  \"description\": \"Black leather wallet\",\n  \"location\": \"Cafeteria\",\n  \"found_date\": \"2026-02-01\",\n  \"approved\": true\n}" },
+        "url": { "raw": "http://localhost:8000/api/items", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api","items"] }
+      }
+    },
+    {
+      "name": "Create Item with Image (admin)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "multipart/form-data" } ],
+        "body": { "mode": "formdata", "formdata": [
+          { "key": "title", "value": "Lost Keys", "type": "text" },
+          { "key": "description", "value": "Set of car keys", "type": "text" },
+          { "key": "location", "value": "Gym", "type": "text" },
+          { "key": "found_date", "value": "2026-02-10", "type": "text" },
+          { "key": "approved", "value": "true", "type": "text" },
+          { "key": "image", "type": "file", "src": [] }
+        ] },
+        "url": { "raw": "http://localhost:8000/api/items/upload", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api","items","upload"] }
+      }
+    },
+    {
+      "name": "Update Item (admin)",
+      "request": {
+        "method": "PATCH",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"approved\": false\n}" },
+        "url": { "raw": "http://localhost:8000/api/items/1", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api","items","1"] }
+      }
+    },
+    {
+      "name": "Delete Item (admin)",
+      "request": {
+        "method": "DELETE",
+        "url": { "raw": "http://localhost:8000/api/items/1", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["api","items","1"] }
+      }
+    }
+  ]
+}

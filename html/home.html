@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <h1>Welcome to the School Lost & Found</h1>
+  <form method="get" action="/" class="form" aria-label="Filter items">
+    <div class="form-row">
+      <div>
+        <label class="input-label" for="q">Search</label>
+        <input id="q" aria-label="Search" type="search" name="q" placeholder="Search items..." value="{{q}}">
+      </div>
+      <div>
+        <label class="input-label" for="location">Location</label>
+        <input id="location" aria-label="Filter by location" type="text" name="location" placeholder="e.g. Cafeteria" value="{{location or ''}}">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label class="input-label" for="start_date">Found after</label>
+        <input id="start_date" aria-label="Found after" type="date" name="start_date" value="{{start_date or ''}}">
+      </div>
+      <div>
+        <label class="input-label" for="end_date">Found before</label>
+        <input id="end_date" aria-label="Found before" type="date" name="end_date" value="{{end_date or ''}}">
+      </div>
+    </div>
+    <div class="submit-wrap">
+      <button class="btn" aria-label="Apply filters" type="submit">Apply filters</button>
+      <a class="btn secondary" href="/">Reset</a>
+    </div>
+  </form>
+  <section class="grid">
+    {% for item in items %}
+      <article class="card">
+        {% if item.image %}
+          <a href="{{ url_for('item_detail', item_id=item.id) }}"><img src="/uploads/{{item.image}}" alt="Photo of {{item.title}}"></a>
+        {% endif %}
+        <h2><a href="{{ url_for('item_detail', item_id=item.id) }}">{{item.title}}</a></h2>
+        <p class="muted">Found: {{item.location or 'Unknown'}} • {{item.found_date or 'Date unknown'}}</p>
+        <p>{{item.description[:140]}}</p>
+      </article>
+    {% else %}
+      <p>No items found.</p>
+    {% endfor %}
+  </section>
+{% endblock %}

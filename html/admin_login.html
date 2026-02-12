@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <h1>Admin Login</h1>
+  <form method="post" class="form" aria-label="Admin login form">
+    <div>
+      <label class="input-label" for="username">Username</label>
+      <input id="username" name="username" required aria-required="true" aria-label="Admin username">
+    </div>
+    <div>
+      <label class="input-label" for="password">Password</label>
+      <input id="password" name="password" type="password" required aria-required="true" aria-label="Admin password">
+    </div>
+    <button class="btn" type="submit">Login</button>
+  </form>
+{% endblock %}

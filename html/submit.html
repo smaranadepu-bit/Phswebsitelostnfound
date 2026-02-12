@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block content %}
+  <h1>Report a Found Item</h1>
+  <form method="post" enctype="multipart/form-data" class="form" aria-label="Report found item form">
+    <div>
+      <label class="input-label" for="title">Title</label>
+      <input id="title" name="title" required aria-required="true">
+    </div>
+    <div>
+      <label class="input-label" for="description">Description</label>
+      <textarea id="description" name="description"></textarea>
+    </div>
+    <div>
+      <label class="input-label" for="location">Location</label>
+      <input id="location" name="location">
+    </div>
+    <div>
+      <label class="input-label" for="found_date">Found Date</label>
+      <input id="found_date" type="date" name="found_date">
+    </div>
+    <div>
+      <label class="input-label" for="image">Photo</label>
+      <input id="image" type="file" name="image" accept="image/*">
+    </div>
+    <button class="btn" type="submit">Submit</button>
+  </form>
+{% endblock %}
